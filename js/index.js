@@ -16,11 +16,11 @@ connected = true;
   });
   
 socket.addEventListener('message', function (event) {
-   document.getElementById('msgsbox').innerHTML += `<p>${event.data}</p>`
+   document.getElementById('msgsbox').innerHTML += `<a>${event.data}</a></br>`
 });
 
 socket.addEventListener('close',function(){
-document.getElementById('state').innerText = "Connection Closed";
+document.getElementById('state').innerText = "Connection Terminated";
 document.getElementById('msgsbox').innerHTML = "";
 connected = false;
 
