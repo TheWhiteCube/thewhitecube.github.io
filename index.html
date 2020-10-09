@@ -30,7 +30,7 @@
         <i class="fa fa-plug"></i> Connect
       </button>
       
-      <button onclick="socket.send(document.getElementById('msgbox').value)" class="btn">
+      <button onclick="socket.send(document.getElementById('msgbox').value); document.getElementById('msgbox').value = null" class="btn">
         <i class="fas fa-paper-plane"></i> Send
       </button>
       
