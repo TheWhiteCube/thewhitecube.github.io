@@ -16,7 +16,7 @@ connected = true;
   });
   
 socket.addEventListener('message', function (event) {
-   document.getElementById('msgsbox').innerHTML += `<a>${event.data}</a></br>`
+   document.getElementById('msgsbox').innerText += `${event.data}\n`
 });
 
 socket.addEventListener('close',function(){
@@ -27,6 +27,7 @@ connected = false;
 })
 connected = true;
 }
+
 
 
 
