@@ -1,54 +1,95 @@
-<!doctype html>
-<html>
-  
+<html lang="ru">
   <head>
-    <title>WS Chatting</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/fontawesome.css">
-    <script src="js/jquery.js"></script>
-    <script src="js/index.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="js/bootstrap.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenWS</title>
   </head>
-  
   <body>
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand">Navbar</a>
-      
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="ws://example.com" aria-label="ws://example.com" id="tbox">
-      
-     <input class="form-control mr-sm-2" type="text" placeholder="Type your message here" aria-label="Type you message" id="msgbox">
-      <button onclick="connect()" class="btn btn-outline">
-        <i class="fa fa-plug"></i> Connect
-      </button>
-      
-      <button onclick="socket.send(document.getElementById('msgbox').value); document.getElementById('msgbox').value = null" class="btn">
-        <i class="fas fa-paper-plane"></i> Send
-      </button>
-      
-      <button onclick="socket.close()" class="btn">
-        <i class="fas fa-times-circle"></i>Disconnect
-      </button>
-      
-      <button onclick="document.getElementById('msgsbox').innerHTML = null" class="btn">
-        Clear
-      </button>
+    <div class="navbar">
+   <input type="button" onclick="connect()" id="add" value="">
+   <div id="messages"></div>
+   <input type="text" class="msbox" id="msgbox">
+   <input type="button" class="send" value="=>" onclick="send()">
     </div>
-  </div>
-    </nav>
+    <style>
+    * {
+      margin: 0
+    }
     
-    <div class="alert-info" id="state">
-      Ready to Connect
-    </div>
+    body {
+      position: relative;
+    }
     
-    <div id="msgsbox"></div>
+    .navbar {
+      background: lightgreen;
+      border-radius: 0px 0px 10px 10px;
+      height: 30px;
+    }
+    
+    #add {
+      background: lightgreen;
+      border-color: white;
+      border-radius: 0px 0px 0px 10px;
+      width: 30px;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border-width: 1px;
+    }
+    
+    
+    .msbox {
+      left: 30;
+      bottom: 10;
+      position: absolute;
+    }
+    .send {
+      bottom: 10;
+      position: absolute;
+      left: 215;
+    }
+    
+ 
+    </style>
+    
+    
+    
+    <script>
+    var socket;
+    function connect() {
+      var url;
+      var btn = document.getElementById("add");
+      
+        url = prompt("WebSocket url like 'ws://example.com");
+        socket = new WebSocket(url);
+      
+     
+
+      socket.onopen = function() {
+        document.head.title.value = url + " - OpenWS"
+      }
+      
+      socket.onmessage = function(e){
+        var box = document.createElement('div');
+        box.style.color = "#"+((1<<24)*Math.random()|0).toString(16);
+        var message = document.createTextNode(e.data)
+        box.appendChild(message);
+        document.getElementById('messages').appendChild(box)
+      }
+      
+      socket.onclose = function(e){
+        document.head.title.value = "OpenWS"
+        alert("Server closed by code " + e.code + " and reason: " + e.reason);
+      }
+      
+   
+    }
+    
+    function send() {
+      socket.send(document.getElementById("msgbox").value)
+      document.getElementById("msgbox").value = "";
+    }
+    </script>
   </body>
+  
 </html>
