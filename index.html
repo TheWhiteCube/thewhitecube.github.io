@@ -7,19 +7,21 @@
   <body>
     <div class="navbar">
    <input type="button" onclick="connect()" id="add" value="">
+   </div>
+   <div class="wrapper">
    <div id="messages"></div>
+   </div>
    <input type="text" class="msbox" id="msgbox">
    <input type="button" class="send" value="=>" onclick="send()">
-    </div>
     <style>
     * {
-      margin: 0
+      margin: 0;
+      padding: 0;
     }
     
-    body {
-      position: relative;
+    html,body {
+      height: 100%;
     }
-    
     .navbar {
       background: lightgreen;
       border-radius: 0px 0px 10px 10px;
@@ -31,7 +33,7 @@
       border-color: white;
       border-radius: 0px 0px 0px 10px;
       width: 30px;
-      height: 100%;
+     height: 100%;
       margin: 0;
       padding: 0;
       border-width: 1px;
@@ -39,17 +41,23 @@
     
     
     .msbox {
-      left: 30;
-      bottom: 10;
-      position: absolute;
+    height: 30px;
+    width: 90%;
+    
     }
     .send {
-      bottom: 10;
-      position: absolute;
-      left: 215;
+     height: 30px;
     }
     
- 
+    .messages {
+      display: table-row;
+      height: 100%;
+    }
+    
+    .wrapper {
+      display: table;
+      height: 100%;
+    }
     </style>
     
     
