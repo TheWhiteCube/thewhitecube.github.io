@@ -40,6 +40,7 @@
     }
     
     
+    
     .msbox {
     height: 30px;
     width: 90%;
@@ -60,21 +61,35 @@
     }
     </style>
     
-    
+    <noscript>
+      <style>
+      .wrapper {
+        display: none;
+      }
+      .navbar {
+        display: none;
+      }
+      </style>
+    </noscript>
     
     <script>
     var socket;
+    var input = document.getElementsByClassName("msbox").item(0)
+    input.disabled = true;
+    var btn = document.getElementsByClassName("send").item(0)
+      btn.disabled = true;
     function connect() {
-      var url;
-      var btn = document.getElementById("add");
       
+      if(socket) socket.close(1000,"User closed the connection")
+      var url;
         url = prompt("WebSocket url like 'ws://example.com");
         socket = new WebSocket(url);
       
      
 
       socket.onopen = function() {
-        document.head.title.value = url + " - OpenWS"
+        input.disabled = false;    
+        btn.disabled = false;
       }
       
       socket.onmessage = function(e){
@@ -86,8 +101,10 @@
       }
       
       socket.onclose = function(e){
-        document.head.title.value = "OpenWS"
+
         alert("Server closed by code " + e.code + " and reason: " + e.reason);
+        input.disabled = true;
+        btn.disabled = true;
       }
       
    
