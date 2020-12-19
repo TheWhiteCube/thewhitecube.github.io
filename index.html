@@ -1,63 +1,68 @@
-<html lang="ru">
+<html lang="en">
   <head>
+    
+ 
+<link rel="stylesheet" href="./material.min.css">
+<script src="./material.min.js"></script>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OpenWS</title>
   </head>
   <body>
-    <div class="navbar">
-   <input type="button" onclick="connect()" id="add" value="">
-   </div>
-   <div class="wrapper">
-   <div id="messages"></div>
-   </div>
-   <input type="text" class="msbox" id="msgbox">
-   <input type="button" class="send" value="=>" onclick="send()">
+      
+<span class="mdl-chip mdl-chip--deletable mdl-chip-connect">
+    <span class="mdl-chip__text">Connect</span>
+    <button onclick="connect()" type="button" class="mdl-chip__action"><i id="connect-icon" class="material-icons">add</i></button>
+</span>
+<div id="wrapper">
+  <div id="messages"></div
+  </div>
+  <div class="mdl-textfield mdl-js-textfield">
+    <input type="text" class="mdl-textfield__input msbox" id="msgbox">
+<button class="mdl-button mdl-js-button mdl-button--icon send" onclick="send()">
+  <i class="material-icons">textsms</i>
+</button>
+
+  </div>
     <style>
     * {
       margin: 0;
       padding: 0;
     }
     
-    html,body {
+    .mdl-chip-connect {
+      width: 80px;
+    }
+    html{
       height: 100%;
     }
-    .navbar {
-      background: lightgreen;
-      border-radius: 0px 0px 10px 10px;
-      height: 30px;
+    
+    body {
+      display: grid;
+      min-height: 100%;
+      grid-template-rows: 1fr auto;
     }
-    
-    #add {
-      background: lightgreen;
-      border-color: white;
-      border-radius: 0px 0px 0px 10px;
-      width: 30px;
-     height: 100%;
-      margin: 0;
-      padding: 0;
-      border-width: 1px;
-    }
-    
-    
     
     .msbox {
-    height: 30px;
-    width: 90%;
-    
+    grid-row-start: 2;
+    grid-row-end: 3;
     }
     .send {
-     height: 30px;
+    grid-row-start: 2;
+    grid-rows-end: 3;
+    margin-left: 100%;
     }
     
-    .messages {
-      display: table-row;
-      height: 90%;
+    #messages {
+      padding: 20px;
+      padding-bottom: 50px;
     }
     
-    .wrapper {
-      display: table;
-      height: 90%;
+    
+    .mdl-textfield {
+      width: 100%;
     }
     </style>
     
@@ -66,7 +71,10 @@
       .wrapper {
         display: none;
       }
-      .navbar {
+      .msbox {
+        display: none;
+      }
+      .send {
         display: none;
       }
       </style>
@@ -80,7 +88,7 @@
       btn.disabled = true;
     function connect() {
       
-      if(socket) socket.close(1000,"User closed the connection")
+      if(socket) return socket.close(1000,"User closed the connection")
       var url;
         url = prompt("WebSocket url like 'ws://example.com");
         socket = new WebSocket(url);
@@ -90,25 +98,36 @@
       socket.onopen = function() {
         input.disabled = false;    
         btn.disabled = false;
+        document.getElementsByClassName("mdl-chip__text").item(0).innerText = "Disconnect"
+        document.getElementsByClassName("mdl-chip").item(0).style.width = 90;
+        document.getElementById("connect-icon").innerText = "remove_circle";
       }
       
       socket.onmessage = function(e){
-        var box = document.createElement('div');
-        box.style.color = "#"+((1<<24)*Math.random()|0).toString(16);
-        var message = document.createTextNode(e.data)
-        box.appendChild(message);
-        document.getElementById('messages').appendChild(box)
+        var box_chip = document.createElement('span');
+        box_chip.classList.add("mdl-chip")
+        var box_text = document.createElement("span")
+        box_text.classList.add("mdl-chip__text")
+        var text = document.createTextNode(e.data)
+        box_text.appendChild(text)
+        box_chip.appendChild(box_text)
+        document.getElementById('messages').appendChild(box_chip)
+        document.getElementById('messages').innerHTML += "</br>"
       }
+      
       
       socket.onclose = function(e){
 
         alert("Server closed by code " + e.code + " and reason: " + e.reason);
         input.disabled = true;
         btn.disabled = true;
+        
+        document.getElementsByClassName("mdl-chip__text").item(0).innerText = "Connect"
+        document.getElementsByClassName("mdl-chip").item(0).style.width = 80;
+        document.getElementById("connect-icon").innerText = "add";
       }
-      
-   
     }
+   
     
     function send() {
       socket.send(document.getElementById("msgbox").value)
