@@ -52,7 +52,7 @@
     .send {
     grid-row-start: 2;
     grid-rows-end: 3;
-    margin-left: 100%;
+    margin-left: 90%;
     }
     
     #messages {
@@ -88,7 +88,7 @@
       btn.disabled = true;
     function connect() {
       
-      if(socket) return socket.close(1000,"User closed the connection")
+      if(socket && socket.readyState == 1) return socket.close(1000,"User closed the connection")
       var url;
         url = prompt("WebSocket url like 'ws://example.com");
         socket = new WebSocket(url);
@@ -121,7 +121,7 @@
         alert("Server closed by code " + e.code + " and reason: " + e.reason);
         input.disabled = true;
         btn.disabled = true;
-        
+   document.getElementById('messages').innerText = "";
         document.getElementsByClassName("mdl-chip__text").item(0).innerText = "Connect"
         document.getElementsByClassName("mdl-chip").item(0).style.width = 80;
         document.getElementById("connect-icon").innerText = "add";
