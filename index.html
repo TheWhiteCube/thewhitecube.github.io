@@ -101,6 +101,11 @@
         document.getElementsByClassName("mdl-chip__text").item(0).innerText = "Disconnect"
         document.getElementsByClassName("mdl-chip").item(0).style.width = 90;
         document.getElementById("connect-icon").innerText = "remove_circle";
+      document.onkeyup = function(e){
+        if(e.key == "Enter") {
+send()
+        }
+      }
       }
       
       socket.onmessage = function(e){
