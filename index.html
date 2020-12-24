@@ -10,19 +10,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OpenWS</title>
   </head>
-  <body>
-      
+  <body >
+      <center>
 <span class="mdl-chip mdl-chip--deletable mdl-chip-connect">
     <span class="mdl-chip__text">Connect</span>
     <button onclick="connect()" type="button" class="mdl-chip__action"><i id="connect-icon" class="material-icons">add</i></button>
 </span>
+</center>
 <div id="wrapper">
   <div id="messages"></div
   </div>
   <div class="mdl-textfield mdl-js-textfield">
     <input type="text" class="mdl-textfield__input msbox" id="msgbox">
 <button class="mdl-button mdl-js-button mdl-button--icon send" onclick="send()">
-  <i class="material-icons">textsms</i>
+  <i style="color:white" class="material-icons">textsms</i>
 </button>
 
   </div>
@@ -43,11 +44,13 @@
       display: grid;
       min-height: 100%;
       grid-template-rows: 1fr auto;
+      background:#23272A;
     }
     
     .msbox {
     grid-row-start: 2;
     grid-row-end: 3;
+    color: white;
     }
     .send {
     grid-row-start: 2;
@@ -64,6 +67,8 @@
     .mdl-textfield {
       width: 100%;
     }
+    
+    
     </style>
     
     <noscript>
