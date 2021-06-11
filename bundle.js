@@ -122,7 +122,7 @@ fetch("https://discord.com/api/guilds/843135287386964009/widget.json").then(res 
   container.innerHTML = `
   <h4> <b>${json.name}</b></h4>
   Online: ${json.members.length}
-  <button href="${json.instant_invite}" class="blue-button">Join</button>
+  <button onclick="document.location = '${json.instant_invite}'" class="blue-button">Join</button>
   `
 })
 
